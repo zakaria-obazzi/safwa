@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بيت الصفوة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #3a8a3a;
+    --green-light: #5cb85c;
+    --orange: #e05c1a;
+    --white: #ffffff;
+    --cream: #f9f6f0;
+    --dark: #1a2e1a;
+    --whatsapp: #25D366;
+    --whatsapp-dark: #128C7E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Cairo', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 3px solid var(--green);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Tajawal', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 0.95rem; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--green); transform: scaleX(0); transition: transform 0.3s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-social { display: flex; gap: 10px; align-items: center; }
+  .nav-social a { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--green); color: white; text-decoration: none; font-size: 0.8rem; font-weight: 700; transition: background 0.2s, transform 0.2s; }
+  .nav-social a:hover { background: var(--orange); transform: scale(1.15); }
+  .nav-social a.wa-nav { background: var(--whatsapp); }
+  .nav-social a.wa-nav:hover { background: var(--whatsapp-dark); }
+
+  /* WHATSAPP FLOATING BUTTON */
+  .wa-float {
+    position: fixed; bottom: 24px; left: 24px; z-index: 999;
+    width: 60px; height: 60px;
+    background: var(--whatsapp);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: waPulse 2.5s ease-in-out infinite;
+  }
+  .wa-float:hover { transform: scale(1.12); box-shadow: 0 10px 35px rgba(37,211,102,0.7); }
+  .wa-float svg { width: 32px; height: 32px; fill: white; }
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 6px 40px rgba(37,211,102,0.85), 0 0 0 12px rgba(37,211,102,0.12); }
+  }
+  .wa-float-tooltip {
+    position: absolute; left: 70px; top: 50%; transform: translateY(-50%);
+    background: #1a1a1a; color: white; padding: 6px 14px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600; white-space: nowrap;
+    font-family: 'Cairo', sans-serif;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .wa-float:hover .wa-float-tooltip { opacity: 1; }
+
+  .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background-image: url('front_view1.jpg'); background-size: cover; background-position: center top; filter: brightness(0.45); transform: scale(1.05); animation: zoomBg 12s ease-in-out infinite alternate; }
+  @keyframes zoomBg { from { transform: scale(1.05); } to { transform: scale(1.12); } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(58,138,58,0.55) 0%, rgba(26,46,26,0.3) 50%, rgba(224,92,26,0.4) 100%); }
+  .hero-content { position: relative; text-align: center; color: white; padding: 2rem; animation: fadeUp 1s ease forwards; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-badge { display: inline-block; background: var(--orange); color: white; padding: 6px 20px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .hero h1 { font-family: 'Tajawal', sans-serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; line-height: 1; text-shadow: 0 4px 30px rgba(0,0,0,0.5); margin-bottom: 1rem; }
+  .hero h1 em { font-style: normal; color: #a8e063; }
+  .hero p { font-size: clamp(1rem, 2.5vw, 1.3rem); opacity: 0.9; margin-bottom: 2rem; font-weight: 300; }
+  .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn { padding: 14px 32px; border-radius: 50px; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; border: none; transition: all 0.3s; text-decoration: none; display: inline-block; }
+  .btn-primary { background: var(--green); color: white; box-shadow: 0 8px 25px rgba(58,138,58,0.5); }
+  .btn-primary:hover { background: var(--green-light); transform: translateY(-3px); box-shadow: 0 12px 35px rgba(58,138,58,0.6); }
+  .btn-outline { background: transparent; color: white; border: 2px solid white; }
+  .btn-outline:hover { background: white; color: var(--green); transform: translateY(-3px); }
+  .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 8px 25px rgba(37,211,102,0.45); display: inline-flex; align-items: center; gap: 8px; }
+  .btn-whatsapp:hover { background: var(--whatsapp-dark); transform: translateY(-3px); box-shadow: 0 12px 35px rgba(37,211,102,0.6); }
+  .hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; color: white; opacity: 0.7; animation: bounce 2s infinite; }
+  .hero-scroll span { font-size: 0.75rem; }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+  .features { background: var(--green); color: white; display: flex; justify-content: center; flex-wrap: wrap; }
+  .feature-item { flex: 1; min-width: 200px; padding: 1.5rem 2rem; text-align: center; border-left: 1px solid rgba(255,255,255,0.15); transition: background 0.3s; }
+  .feature-item:last-child { border-left: none; }
+  .feature-item:hover { background: rgba(255,255,255,0.1); }
+  .feature-icon { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+  .feature-item h3 { font-size: 0.9rem; font-weight: 700; }
+  .feature-item p { font-size: 0.75rem; opacity: 0.8; margin-top: 2px; }
+
+  section { padding: 80px 5%; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-header h2 { font-family: 'Tajawal', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--dark); position: relative; display: inline-block; }
+  .section-header h2::after { content: ''; position: absolute; bottom: -8px; left: 20%; right: 20%; height: 4px; background: linear-gradient(90deg, var(--green), var(--orange)); border-radius: 2px; }
+  .section-header p { margin-top: 1.2rem; color: #666; font-size: 1rem; }
+
+  .about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .about-img { border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+  .about-img img { width: 100%; display: block; transition: transform 0.5s; }
+  .about-img:hover img { transform: scale(1.04); }
+  .about-img .badge { position: absolute; bottom: 20px; right: 20px; background: var(--green); color: white; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(58,138,58,0.4); }
+  .about-text h2 { font-family: 'Tajawal', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--dark); }
+  .about-text p { color: #555; line-height: 1.8; margin-bottom: 1.2rem; }
+  .about-stats { display: flex; gap: 2rem; margin-top: 1.5rem; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Tajawal', sans-serif; font-size: 2rem; font-weight: 800; color: var(--green); }
+  .stat-label { font-size: 0.8rem; color: #888; }
+
+  /* PRODUCTS */
+  .products { background: var(--cream); }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+  .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,0.13); }
+
+  /* Product media */
+  .product-media { width: 100%; height: 180px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+  .product-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+  .product-card:hover .product-media img { transform: scale(1.06); }
+  .product-media video { width: 100%; height: 100%; object-fit: cover; }
+  .product-media iframe { width: 100%; height: 100%; border: 0; }
+  .product-media-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+
+  .product-info { padding: 1.2rem; }
+  .product-info h3 { font-weight: 700; margin-bottom: 0.3rem; font-size: 1.05rem; }
+  .product-info p { font-size: 0.85rem; color: #777; line-height: 1.6; }
+  .product-badge { display: inline-block; margin-top: 0.7rem; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; background: #edf7ee; color: var(--green); }
+
+  /* Loading skeleton */
+  .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .skeleton-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+  .skeleton-media { height: 180px; }
+  .skeleton-body { padding: 1.2rem; }
+  .skeleton-title { height: 18px; margin-bottom: 8px; width: 60%; }
+  .skeleton-text { height: 14px; width: 90%; margin-bottom: 4px; }
+  .skeleton-text2 { height: 14px; width: 75%; }
+
+  /* Products notice */
+  .products-notice {
+    text-align: center; margin-bottom: 1.5rem;
+    background: #e8f5e9; border: 2px dashed var(--green);
+    border-radius: 14px; padding: 12px 20px;
+    font-size: 0.88rem; color: #2e7d32; font-weight: 600;
+    max-width: 700px; margin: 0 auto 2rem;
+  }
+
+  .gallery { background: var(--white); }
+  .gallery-grid { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: auto auto; gap: 1rem; max-width: 1000px; margin: 0 auto; }
+  .gallery-item { border-radius: 16px; overflow: hidden; box-shadow: 0 6px 25px rgba(0,0,0,0.1); position: relative; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item:nth-child(1) { grid-row: span 2; height: 450px; }
+  .gallery-item:nth-child(2), .gallery-item:nth-child(3) { height: 215px; }
+  .gallery-item .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(58,138,58,0.7), transparent); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 1rem; color: white; font-weight: 700; font-size: 0.95rem; }
+  .gallery-item:hover .overlay { opacity: 1; }
+
+  .wholesale { background: linear-gradient(135deg, var(--dark) 0%, var(--green) 100%); color: white; text-align: center; padding: 60px 5%; }
+  .wholesale h2 { font-family: 'Tajawal', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 0.8rem; }
+  .wholesale p { font-size: 1.1rem; opacity: 0.85; margin-bottom: 2rem; }
+
+  /* CONTACT */
+  .contact { background: var(--cream); }
+  .contact-wrapper { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-left h3 { font-family: 'Tajawal', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark); }
+  .contact-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.2rem; }
+  .contact-row .icon { width: 44px; height: 44px; background: var(--green); color: white; border-radius: 12px; display: grid; place-items: center; font-size: 1.1rem; flex-shrink: 0; }
+  .contact-row .icon.wa-icon { background: var(--whatsapp); }
+  .contact-row .text { font-size: 0.9rem; color: #555; line-height: 1.7; }
+  .contact-row .text strong { color: var(--dark); display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+  .contact-row .text a { color: var(--green); text-decoration: none; font-weight: 600; }
+  .contact-row .text a.wa-link { color: var(--whatsapp); }
+  .contact-row .text a:hover { text-decoration: underline; }
+
+  .social-links { display: flex; gap: 10px; margin-top: 1.5rem; flex-wrap: wrap; }
+  .social-link { padding: 10px 18px; background: var(--green); color: white; border-radius: 10px; text-decoration: none; font-size: 0.85rem; font-weight: 700; transition: background 0.2s, transform 0.2s; display: flex; align-items: center; gap: 6px; }
+  .social-link:hover { background: var(--orange); transform: translateY(-2px); }
+  .social-link.wa-btn { background: var(--whatsapp); }
+  .social-link.wa-btn:hover { background: var(--whatsapp-dark); transform: translateY(-2px); }
+
+  /* MAP - improved */
+  .map-section { margin-top: 1.8rem; }
+  .map-header { display: flex; align-items: center; gap: 10px; margin-bottom: 0.8rem; }
+  .map-header h4 { font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); }
+  .map-box {
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    height: 340px;
+    border: 3px solid var(--green);
+    position: relative;
+  }
+  .map-box iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .map-actions { display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap; }
+  .map-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--orange); color: white; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: opacity 0.2s, transform 0.2s; }
+  .map-link:hover { opacity: 0.9; transform: translateY(-2px); }
+  .map-link.wa-directions { background: var(--whatsapp); }
+
+  /* FORM */
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-form input, .contact-form textarea { width: 100%; padding: 13px 16px; border: 2px solid #e0e0e0; border-radius: 12px; font-family: 'Cairo', sans-serif; font-size: 0.95rem; background: white; transition: border-color 0.3s; outline: none; }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--green); }
+  .contact-form textarea { height: 120px; resize: none; }
+
+  footer { background: var(--dark); color: rgba(255,255,255,0.7); text-align: center; padding: 2rem; font-size: 0.85rem; }
+  footer span { color: var(--green-light); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:nth-child(1) { height: 260px; grid-row: auto; }
+    .about-stats { gap: 1rem; }
+    .features { flex-direction: column; }
+    .feature-item { border-left: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    .map-box { height: 260px; }
+    .wa-float { bottom: 16px; left: 16px; width: 54px; height: 54px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ WHATSAPP FLOATING BUTTON ============ -->
+<a href="https://wa.me/212XXXXXXXXX?text=مرحباً، أريد الاستفسار عن منتجاتكم" target="_blank" class="wa-float" title="تواصل عبر واتساب">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span class="wa-float-tooltip">تواصل عبر واتساب</span>
+</a>
+
+<!-- ============ NAVBAR ============ -->
+<nav>
+  <div class="nav-logo">🛒 بيت <span>الصفوة</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">من نحن</a></li>
+    <li><a href="#products">منتجاتنا</a></li>
+    <li><a href="#gallery">معرض الصور</a></li>
+    <li><a href="#contact">تواصل معنا</a></li>
+  </ul>
+  <div class="nav-social">
+    <a href="#" title="Facebook">ف</a>
+    <a href="#" title="Instagram">إ</a>
+    <a href="#" title="TikTok">ت</a>
+    <a href="https://wa.me/212XXXXXXXXX" target="_blank" title="WhatsApp" class="wa-nav">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">البيع بالجملة والتقسيط</div>
+    <h1>بيت <em>الصفوة</em></h1>
+    <p>وجهتك الأولى للتسوق بالجملة والتجزئة — جودة لا تُضاهى بأسعار تُناسب الجميع</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn btn-primary">اكتشف منتجاتنا</a>
+      <a href="https://wa.me/212XXXXXXXXX?text=مرحباً، أريد الاستفسار عن منتجاتكم" target="_blank" class="btn btn-whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تواصل عبر واتساب
+      </a>
+      <a href="#contact" class="btn btn-outline">تواصل معنا</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>مرر للأسفل</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- ============ FEATURES BAR ============ -->
+<div class="features">
+  <div class="feature-item"><span class="feature-icon">🏷️</span><h3>أسعار الجملة</h3><p>أفضل الأسعار في السوق</p></div>
+  <div class="feature-item"><span class="feature-icon">💳</span><h3>البيع بالتقسيط</h3><p>سهولة الدفع للجميع</p></div>
+  <div class="feature-item"><span class="feature-icon">✅</span><h3>جودة مضمونة</h3><p>منتجات مختارة بعناية</p></div>
+  <div class="feature-item"><span class="feature-icon">🚀</span><h3>تشكيلة واسعة</h3><p>آلاف المنتجات تحت سقف واحد</p></div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="front-view.jpg" alt="متجر بيت الصفوة">
+      <div class="badge">📍 متجرنا في خدمتكم</div>
+    </div>
+    <div class="about-text">
+      <h2>من نحن؟</h2>
+      <p>بيت الصفوة هو متجرك المتكامل للمواد الغذائية والمنزلية، نقدم لكم أرقى المنتجات بأسعار تنافسية تناسب الجميع.</p>
+      <p>نؤمن بأن الجودة والسعر المناسب يسيران جنباً إلى جنب. لهذا نوفر تشكيلة واسعة من المنتجات الغذائية ومواد التنظيف والمستلزمات المنزلية تحت سقف واحد.</p>
+      <p>نبيع بالجملة والتقسيط لنتيح لكل عميل الحصول على ما يحتاجه بكل سهولة ويسر.</p>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-num">+500</div><div class="stat-label">منتج متنوع</div></div>
+        <div class="stat"><div class="stat-num">جملة</div><div class="stat-label">وتقسيط</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">جودة مضمونة</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS (loaded from products.json) ============ -->
+<section class="products" id="products">
+  <div class="section-header">
+    <h2>منتجاتنا</h2>
+    <p>تشكيلة متنوعة لتلبية كل احتياجاتكم</p>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Skeleton loaders while JSON loads -->
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-media"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text2"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-media"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text2"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-media"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text2"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-media"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery" id="gallery">
+  <div class="section-header"><h2>معرض الصور</h2><p>اطلع على متجرنا ومنتجاتنا</p></div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="front-view.jpg" alt="واجهة المتجر"><div class="overlay">واجهة بيت الصفوة</div></div>
+    <div class="gallery-item"><img src="front_view1.jpg" alt="مدخل المتجر"><div class="overlay">مدخل المتجر</div></div>
+    <div class="gallery-item"><img src="safwa.jpg" alt="داخل المتجر"><div class="overlay">منتجاتنا المنزلية</div></div>
+  </div>
+</section>
+
+<!-- ============ WHOLESALE CTA ============ -->
+<div class="wholesale">
+  <h2>هل تبحث عن شراء بالجملة؟</h2>
+  <p>نوفر أسعاراً خاصة للتجار وأصحاب المشاريع مع إمكانية البيع بالتقسيط</p>
+  <a href="https://wa.me/212XXXXXXXXX?text=مرحباً، أريد الاستفسار عن أسعار الجملة" target="_blank" class="btn btn-whatsapp" style="margin-left:10px;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    تواصل عبر واتساب
+  </a>
+  <a href="#contact" class="btn btn-primary" style="background:white;color:var(--green);margin-right:10px;">تواصل معنا الآن</a>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="section-header"><h2>تواصل معنا</h2><p>نحن هنا لخدمتكم في أي وقت</p></div>
+  <div class="contact-wrapper">
+    <!-- LEFT: info + map -->
+    <div class="contact-left">
+      <h3>معلومات التواصل</h3>
+
+      <div class="contact-row">
+        <div class="icon">📍</div>
+        <div class="text">
+          <strong>العنوان</strong>
+          Rue Argazne 1, Fes 30050، المغرب
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="icon">🕐</div>
+        <div class="text">
+          <strong>ساعات العمل</strong>
+          يومياً من الصباح حتى المساء
+        </div>
+      </div>
+
+      <!-- WHATSAPP contact row -->
+      <div class="contact-row">
+        <div class="icon wa-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="text">
+          <strong>واتساب</strong>
+          <a href="https://wa.me/212XXXXXXXXX?text=مرحباً، أريد الاستفسار عن منتجاتكم" target="_blank" class="wa-link">تواصل معنا مباشرة عبر واتساب ←</a>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="icon">📱</div>
+        <div class="text">
+          <strong>تابعونا على وسائل التواصل</strong>
+          Facebook · Instagram · TikTok
+        </div>
+      </div>
+
+      <div class="social-links">
+        <a href="#" class="social-link">📘 Facebook</a>
+        <a href="#" class="social-link">📸 Instagram</a>
+        <a href="#" class="social-link">🎵 TikTok</a>
+        <a href="https://wa.me/212XXXXXXXXX" target="_blank" class="social-link wa-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+
+      <!-- IMPROVED MAP -->
+      <div class="map-section">
+        <div class="map-header">
+          <span>🗺️</span>
+          <h4>موقعنا على الخريطة</h4>
+        </div>
+        <div class="map-box">
+          <!--
+            ✅ IMPROVED MAP: Using precise lat/lng coordinates for Rue Argazne 1, Fes.
+            Coordinates: 34.0433, -5.0037 (central Fes near medina)
+            The &q= parameter pins the exact address. &z=17 gives a closer zoom.
+          -->
+          <iframe
+            src="https://maps.google.com/maps?q=34.0433,-5.0037&z=17&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="موقع بيت الصفوة - Rue Argazne 1, Fes">
+          </iframe>
+        </div>
+        <div class="map-actions">
+          <a href="https://maps.app.goo.gl/RWiZX2AXPjdrXPD46" target="_blank" class="map-link">
+            🗺️ افتح في Google Maps
+          </a>
+          <a href="https://waze.com/ul?ll=34.0433,-5.0037&navigate=yes" target="_blank" class="map-link" style="background:#0099cc;">
+            🧭 افتح في Waze
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div>
+      <h3 style="font-family:'Tajawal',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;color:var(--dark);">أرسل لنا رسالة</h3>
+      <div class="contact-form">
+        <input type="text" placeholder="اسمك الكريم" />
+        <input type="tel" placeholder="رقم هاتفك" />
+        <input type="email" placeholder="بريدك الإلكتروني (اختياري)" />
+        <textarea placeholder="رسالتك أو استفسارك..."></textarea>
+        <button class="btn btn-primary" style="width:100%;border:none;cursor:pointer;">إرسال الرسالة ✉️</button>
+        <a href="https://wa.me/212XXXXXXXXX?text=مرحباً، أريد الاستفسار عن منتجاتكم" target="_blank" class="btn btn-whatsapp" style="width:100%;text-align:center;justify-content:center;display:flex;gap:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          أو راسلنا على واتساب مباشرة
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>جميع الحقوق محفوظة &copy; 2025 — <span>بيت الصفوة</span> | Rue Argazne 1, Fes 30050</p>
+</footer>
+
+<!-- ============ PRODUCTS LOADER SCRIPT ============ -->
+<script>
+/**
+ * ================================================================
+ * PRODUCT LOADER — reads from products.json
+ * ================================================================
+ * HOW TO ADD PRODUCTS:
+ *   1. Open products.json
+ *   2. Add a new object to the "products" array
+ *   3. For images: set "type":"image" and "src":"your-image.jpg"
+ *   4. For local video: set "type":"video" and "src":"your-video.mp4"
+ *   5. For YouTube: set "type":"youtube" and "src":"https://www.youtube.com/embed/VIDEO_ID"
+ *   6. Put image/video files in the SAME folder as this HTML file
+ * ================================================================
+ */
+async function loadProducts() {
+  const grid = document.getElementById('productsGrid');
+
+  try {
+    const response = await fetch('products.json');
+    if (!response.ok) throw new Error('Could not load products.json');
+    const data = await response.json();
+    const products = data.products;
+
+    grid.innerHTML = '';
+
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+
+      // Build media HTML
+      let mediaHTML = '';
+      if (product.media && product.media.length > 0) {
+        const m = product.media[0];
+        if (m.type === 'image') {
+          mediaHTML = `
+            <div class="product-media" style="background:${product.categoryColor || '#f0f0f0'}">
+              <img src="${m.src}" alt="${m.alt || product.name}"
+                   onerror="this.parentElement.innerHTML='<div class=\\'product-media-fallback\\'>${product.emoji || '📦'}</div>'">
+            </div>`;
+        } else if (m.type === 'video') {
+          mediaHTML = `
+            <div class="product-media">
+              <video autoplay muted loop playsinline poster="${m.poster || ''}">
+                <source src="${m.src}" type="video/mp4">
+              </video>
+            </div>`;
+        } else if (m.type === 'youtube') {
+          mediaHTML = `
+            <div class="product-media">
+              <iframe src="${m.src}" title="${m.alt || product.name}"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>`;
+        }
+      } else {
+        // Fallback to emoji
+        mediaHTML = `
+          <div class="product-media product-media-fallback" style="background:${product.categoryColor || '#f0f0f0'}">
+            ${product.emoji || '📦'}
+          </div>`;
+      }
+
+      card.innerHTML = `
+        ${mediaHTML}
+        <div class="product-info">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          ${product.category ? `<span class="product-badge">${product.category}</span>` : ''}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+  } catch (error) {
+    // Fallback: show default emoji cards if JSON fails (e.g. opened locally without server)
+    console.warn('products.json not found, showing default cards. Tip: run from a local server to load external JSON.');
+    grid.innerHTML = `
+      <div class="product-card"><div class="product-media product-media-fallback" style="background:#e8f5e9;font-size:4rem">🥫</div><div class="product-info"><h3>مواد غذائية</h3><p>أطعمة ومشروبات ومعلبات من أفضل الماركات</p><span class="product-badge">غذائي</span></div></div>
+      <div class="product-card"><div class="product-media product-media-fallback" style="background:#fff3e0;font-size:4rem">🧴</div><div class="product-info"><h3>مواد تنظيف</h3><p>منظفات وعناية منزلية بجودة عالية</p><span class="product-badge">تنظيف</span></div></div>
+      <div class="product-card"><div class="product-media product-media-fallback" style="background:#e3f2fd;font-size:4rem">🍽️</div><div class="product-info"><h3>أدوات منزلية</h3><p>أواني وإكسسوارات المطبخ والمنزل</p><span class="product-badge">منزلي</span></div></div>
+      <div class="product-card"><div class="product-media product-media-fallback" style="background:#fce4ec;font-size:4rem">🛒</div><div class="product-info"><h3>بيع بالجملة</h3><p>أسعار خاصة للكميات الكبيرة والتجار</p><span class="product-badge">جملة</span></div></div>
+    `;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "مواد غذائية متنوعة",
+      "description": "أطعمة ومشروبات ومعلبات من أفضل الماركات العالمية والمحلية",
+      "category": "غذائي",
+      "categoryColor": "#e8f5e9",
+      "emoji": "🥫",
+      "media": [
+        { "type": "image", "src": "C:\\Users\\ZAK\\Desktop\\safwabayt\\New folder\\food1.jpg", "alt": "مواد غذائية" },
+        { "type": "image", "src": "C:\\Users\\ZAK\\Desktop\\safwabayt\\New folder\\food2.jpg", "alt": "مواد غذائية" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "مواد التنظيف",
+      "description": "منظفات وعناية منزلية بجودة عالية لنظافة مثالية",
+      "category": "تنظيف",
+      "categoryColor": "#fff3e0",
+      "emoji": "🧴",
+      "media": [
+        { "type": "image", "src": "cleaning1.jpg", "alt": "مواد تنظيف" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "أدوات منزلية",
+      "description": "أواني وإكسسوارات المطبخ والمنزل بأفضل الأسعار",
+      "category": "منزلي",
+      "categoryColor": "#e3f2fd",
+      "emoji": "🍽️",
+      "media": [
+        { "type": "image", "src": "home1.jpg", "alt": "أدوات منزلية" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "بيع بالجملة",
+      "description": "أسعار خاصة للكميات الكبيرة والتجار وأصحاب المشاريع",
+      "category": "جملة",
+      "categoryColor": "#fce4ec",
+      "emoji": "🛒",
+      "media": [
+        { "type": "image", "src": "wholesale1.jpg", "alt": "بيع بالجملة" }
+      ]
+    }
+  ],
+  "instructions": {
+    "howToAddProduct": "لإضافة منتج جديد، انسخ أحد الكائنات أعلاه وعدّل بياناته. للصور ضع اسم الملف في src. للفيديو غيّر type إلى video واجعل src رابط الفيديو أو اسم الملف.",
+    "mediaTypes": ["image", "video"],
+    "videoExample": { "type": "video", "src": "product-video.mp4", "alt": "فيديو المنتج", "poster": "thumbnail.jpg" },
+    "youtubeExample": { "type": "youtube", "src": "https://www.youtube.com/embed/VIDEO_ID", "alt": "فيديو يوتيوب" }
+  }
+}
